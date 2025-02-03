@@ -60,13 +60,16 @@ loadMoreButton.addEventListener('click', async () => {
     const { images } = await fetchImages(query, currentPage);
 
     hideLoadingIndicator(); // Приховуємо індикатор завантаження
-
+    
     if (images.length > 0) {
       renderImages(images); // Додаємо нові зображення
+      
       if (gallery.children.length >= totalHits) {
         loadMoreButton.style.display = 'none'; // Ховаємо кнопку, якщо всі зображення завантажено
         showEndOfResultsMessage(); // Показуємо повідомлення про кінець колекції
       }
+            // Додавання цієї частини в функцію loadImages після renderImages()
+            scrollToNextImages();
     } else {
       loadMoreButton.style.display = 'none'; // Ховаємо кнопку, якщо зображення більше не доступні
       showEndOfResultsMessage();
@@ -79,3 +82,16 @@ loadMoreButton.addEventListener('click', async () => {
     });
   }
 });
+
+// Функція для прокручування сторінки
+const scrollToNextImages = () => {
+  // Отримуємо висоту однієї картки галереї
+  const galleryItem = document.querySelector('.gallery-item');
+  const galleryItemHeight = galleryItem.getBoundingClientRect().height;
+
+  // Плавно прокручуємо сторінку на дві висоти картки
+  window.scrollBy({
+    top: 2 * galleryItemHeight,  // Прокручуємо на дві висоти картки
+    behavior: 'smooth'  // Плавна прокрутка
+  });
+};

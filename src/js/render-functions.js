@@ -35,11 +35,7 @@ export const renderImages = (images) => {
   const galleryItem = document.querySelector('.gallery-item');
   const galleryItemHeight = galleryItem.getBoundingClientRect().height;
 
-  // Плавно прокручуємо сторінку на дві висоти картки
-  window.scrollBy({
-    top: 2 * galleryItemHeight,  // Прокручуємо на дві висоти картки
-    behavior: 'smooth'  // Плавна прокрутка
-  });
+  
 };
 
 // Функція для показу повідомлення, якщо нічого не знайдено
