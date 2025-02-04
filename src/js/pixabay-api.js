@@ -1,6 +1,6 @@
 // pixabay-api.js
 
-export const fetchImages = async (query, page = 1, perPage = 40) => {
+export const fetchImages = async (query, page = 1, perPage = 15) => {
   const API_KEY = '48615456-7478b61ba219341e00e1cbdfc'; // ключ API
 
   const URL = `https://pixabay.com/api/?key=${API_KEY}&q=${query}&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=${perPage}`;

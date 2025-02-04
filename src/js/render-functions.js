@@ -1,5 +1,8 @@
 // render-functions.js
 
+// екземпляр lightbox в глобальній області
+let lightbox = new SimpleLightbox('.gallery a'); 
+
 // Функція для очищення галереї перед новим пошуком
 export const clearGallery = () => {
   const gallery = document.querySelector('.gallery');
@@ -28,8 +31,8 @@ export const renderImages = (images) => {
 
   gallery.insertAdjacentHTML('beforeend', markup); // додаємо нові елементи до існуючих
 
-  // Після того, як зображення додано, потрібно оновити SimpleLightbox
-  const lightbox = new SimpleLightbox('.gallery a');
+  lightbox.refresh(); // Оновлюємо lightbox після додавання нових зображень
+ 
 
   // Отримуємо висоту однієї картки галереї
   const galleryItem = document.querySelector('.gallery-item');
@@ -47,9 +50,14 @@ export const showNoResultsMessage = () => {
 };
 
 // Функція для показу індикатора завантаження
-export const showLoadingIndicator = () => {
+export const showLoadingIndicator = (type) => {
   const loader = document.querySelector('.loader');
-  loader.style.display = 'block'; // Показуємо індикатор
+  
+  if (type === 'search') {
+    loader.style.display = 'block'; // Показуємо loader для пошуку
+  } else if (type === 'loadMore') {
+    loader.style.display = 'block'; // Показуємо loader під кнопкою
+  }
 };
 
 // Функція для приховання індикатора завантаження

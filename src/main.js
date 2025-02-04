@@ -20,7 +20,11 @@ form.addEventListener('submit', async (event) => {
   if (query === '') return;
 
   currentPage = 1; // Скидаємо сторінку на 1 при новому запиті
-  loader.style.display = 'block'; // Показуємо індикатор завантаження
+
+  // Показуємо loader
+  showLoadingIndicator('search');
+
+  //loader.style.display = 'block'; // Показуємо індикатор завантаження
   loadMoreButton.style.display = 'none'; // Ховаємо кнопку "Load more" при новому запиті
 
   // Очищаємо галерею перед новим пошуком
@@ -54,16 +58,22 @@ form.addEventListener('submit', async (event) => {
 loadMoreButton.addEventListener('click', async () => {
   currentPage += 1; // Збільшуємо номер сторінки
 
-  loader.style.display = 'block'; // Показуємо індикатор завантаження
+   // Показуємо loader під кнопкою
+   showLoadingIndicator('loadMore');
 
+  // Затримка перед відображенням галереї (можна змінити 1500 на бажану кількість мілісекунд)
+  setTimeout(() => {
+  }, 5500); // Затримка в 1.5 секунди (можна змінити)
   try {
+   
     const { images } = await fetchImages(query, currentPage);
 
     hideLoadingIndicator(); // Приховуємо індикатор завантаження
     
     if (images.length > 0) {
+  
       renderImages(images); // Додаємо нові зображення
-      
+    
       if (gallery.children.length >= totalHits) {
         loadMoreButton.style.display = 'none'; // Ховаємо кнопку, якщо всі зображення завантажено
         showEndOfResultsMessage(); // Показуємо повідомлення про кінець колекції
@@ -81,6 +91,7 @@ loadMoreButton.addEventListener('click', async () => {
       message: 'An error occurred while fetching the images.',
     });
   }
+
 });
 
 // Функція для прокручування сторінки
